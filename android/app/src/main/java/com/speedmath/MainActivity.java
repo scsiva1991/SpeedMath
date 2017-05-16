@@ -12,4 +12,10 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "SpeedMath";
     }
+
+    /*@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this,true);
+        super.onCreate(savedInstanceState);
+    }*/
 }
