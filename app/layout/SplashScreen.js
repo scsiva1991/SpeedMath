@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 import {
-  View
+  View,
   StyleSheet,
-  Image
+  Image,
+  Text
 } from 'react-native';
 
 import Fonts from '../util/Fonts';

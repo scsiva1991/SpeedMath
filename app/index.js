@@ -14,9 +14,9 @@ import {
 } from 'react-navigation';
 
 import SplashScreen from './layout/SplashScreen';
-import Colors from '../util/Colors';
+import Colors from './util/Colors';
 
-const App = StackNavigator({
+const AppNavigator = StackNavigator({
   Splash: {screen: SplashScreen},
   Main: {screen: MainScreen},
 });
