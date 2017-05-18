@@ -14,27 +14,12 @@ import {
 } from 'react-navigation';
 
 import SplashScreen from './layout/SplashScreen';
-import Colors from './util/Colors';
+import MainScreen from './layout/MainScreen';
+import GameScreen from './layout/GameScreen'
 
-const AppNavigator = StackNavigator({
-  Splash: {screen: SplashScreen},
-  Main: {screen: MainScreen},
-});
-
-export default class App extends Component{
-
-  constructor(props){
-    super(props);
-    StatusBar.setBackgroundColor(Colors.darkColor,false);
-  }
-
-  componentWillMount() {
-    setTimeout(() => {navigate('Main');}, 1000);
-  }
-
-  render() {
-    return(
-      <SplashScreen />
-    )
-  }
-}
+export default StackNavigator({
+  SplashScreen: { screen: SplashScreen },
+  MainScreen: { screen: MainScreen }
+}, {
+  headerMode: 'none'
+})

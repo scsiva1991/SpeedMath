@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 
 export default class GameScreen extends Component {
   render() {
@@ -10,8 +10,8 @@ export default class GameScreen extends Component {
           <View style={[styles.progressBar]}>
             <Text>progressBar</Text>
           </View>
-          <View style={[styles.score]}>
-            <Text>Score: 0</Text>
+          <View style={{marginRight: 5}}>
+            <Text style={{color: '#fff'}}>Score: 0</Text>
           </View>
         </View>
         <View style={[styles.gameLayout]}>
@@ -114,7 +114,7 @@ export default class GameScreen extends Component {
               onPress={this._onPressButton}>
               <View>
                 <Image
-                  source={require('../images/delete.png')} 
+                  source={require('../images/delete.png')}
                 />
               </View>
             </TouchableHighlight>
@@ -160,24 +160,24 @@ const styles = StyleSheet.create({
   answerLayout: {
     backgroundColor: '#fff',
     padding: 5,
-    minWidth: 100,
+    minWidth: 200,
   },
   answer: {
     color: '#383547',
     textAlign: 'center',
+    fontSize: 20
   },
   buttonLayout: {},
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBotom: 5,
   },
   buttonValue: {
     color: '#fff',
   },
   button: {
     backgroundColor: '#444153',
-    height: 30,
+    height: 50,
     margin: 1,
     flex: 1,
     justifyContent: 'center',

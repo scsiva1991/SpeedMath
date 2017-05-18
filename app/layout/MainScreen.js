@@ -9,6 +9,9 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import Colors from '../util/Colors';
+import Fonts from '../util/Fonts';
+
 export default class MainScreen extends Component {
   render() {
     return (
@@ -18,7 +21,7 @@ export default class MainScreen extends Component {
           backgroundColor: '#383547',
         }}>
         <View style={[styles.appTitleBox]}>
-          <Text style={[styles.appTitle]}> SpeedMath </Text>
+          <Text style={[styles.appTitle]}> Speed Math </Text>
         </View>
         <ScrollView style={{ marginTop: 30 }}>
           <TouchableHighlight onPress={this._onPressButton}>
@@ -88,12 +91,13 @@ const styles = StyleSheet.create({
   appTitleBox: {
     backgroundColor: '#30D1D5',
     padding: 5,
-    marginTop: 100,
+    marginTop: 80,
   },
   appTitle: {
     textAlign: 'center',
     color: '#fff',
     fontSize: 20,
+    fontFamily: Fonts.OpenSansRegular,
   },
   menuBorder: {
     width: 200,
@@ -108,5 +112,6 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     fontSize: 15,
+    fontFamily: Fonts.OpenSansRegular,
   },
 });
