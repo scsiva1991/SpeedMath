@@ -19,7 +19,8 @@ import GameScreen from './layout/GameScreen'
 
 export default StackNavigator({
   SplashScreen: { screen: SplashScreen },
-  MainScreen: { screen: MainScreen }
+  MainScreen: { screen: MainScreen },
+  GameScreen: { screen: GameScreen }
 }, {
   headerMode: 'none'
 })

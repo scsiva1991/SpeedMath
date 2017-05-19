@@ -11,9 +11,14 @@ import {
 
 import Colors from '../util/Colors';
 import Fonts from '../util/Fonts';
+import Constants from '../util/Constants';
+import { NavigationActions } from 'react-navigation'
 
 export default class MainScreen extends Component {
   render() {
+
+    const { navigate } = this.props.navigation;
+
     return (
       <View
         style={{
@@ -24,24 +29,26 @@ export default class MainScreen extends Component {
           <Text style={[styles.appTitle]}> Speed Math </Text>
         </View>
         <ScrollView style={{ marginTop: 30 }}>
-          <TouchableHighlight onPress={this._onPressButton}>
+          <TouchableHighlight onPress={() =>
+            navigate('GameScreen', { mode: Constants.EASY });
+          }>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                EASY
+                Constants.EASY
               </Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight onPress={this._onPressButton}>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                MEDIUM
+                Constants.MEDIUM
               </Text>
             </View>
           </TouchableHighlight>
           <TouchableHighlight onPress={this._onPressButton}>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                HARD
+                Constants.HARD
               </Text>
             </View>
           </TouchableHighlight>
@@ -90,13 +97,14 @@ export default class MainScreen extends Component {
 const styles = StyleSheet.create({
   appTitleBox: {
     backgroundColor: '#30D1D5',
-    padding: 5,
-    marginTop: 80,
+    padding: 10,
+    marginTop: 60,
   },
   appTitle: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: 'bold',
     fontFamily: Fonts.OpenSansRegular,
   },
   menuBorder: {

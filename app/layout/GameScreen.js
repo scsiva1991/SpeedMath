@@ -2,7 +2,58 @@ import React, { Component } from 'react';
 
 import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
 
+import Constants from '../util/Constants';
+
 export default class GameScreen extends Component {
+
+  constructor(props) {
+    super();
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', mode : Constants.EASY };
+  }
+
+  componentWillMount() {
+     this.setState({ mode: this.props.mode });
+     this.setQuestion();
+  }
+
+  onPressButton = () => {
+    if(parseFloat(this.state.userAnswer+i) == this.state.answer) {
+      this.setState({score: this.state.score + 1, userAnswer: ''});
+      this.setQuestion();
+    } else if(i === '*') {
+      let removedNumber = this.state.userAnswer.split('').splice(0, this.state.userAnswer.length-1);
+      this.setState({
+        userAnswer: removedNumber.join('')
+      });
+    } else {
+      this.setState({
+        userAnswer: this.state.userAnswer + i
+      });
+    }
+  }
+
+  setQuestion() {
+    let n1 = 0, n2 = 0;
+    let exprArr = Constants.EXPRESSIONS;
+    let expr = exprArr[ Math.floor(Math.random() * exprArr.length)];
+    let answer = 0;
+
+    if( this.state.mode == Constants.EASY ) {
+      n1 = Math.floor(Math.random() * Constants.EASY_NUM2) + 1;
+      n2 = Math.floor(Math.random() * n1) + 1;
+      answer = Number(eval( n1 + expr + n2)).toFixed(2);
+    } else if( this.state.mode == Constants.MEDIUM ) {
+      n1 = Math.floor(Math.random() * Constants.MEDIUM_NUM2) + 1;
+      n2 = Math.floor(Math.random() * n1) + 1;
+      answer = Number(eval( n1 + expr + n2)).toFixed(2);
+    } else {
+      n1 = Math.floor(Math.random() * Constants.HARD_NUM2) + 1;
+      n2 = Math.floor(Math.random() * n1) + 1;
+      answer = Number(eval( n1 + expr + n2)).toFixed(2);
+    }
+    this.setState({n1: n1, n2 : n2, expr: expr, answer: answer}); 
+  }
+
   render() {
     return (
       <View style={[styles.container]}>
@@ -15,31 +66,31 @@ export default class GameScreen extends Component {
           </View>
         </View>
         <View style={[styles.gameLayout]}>
-          <Text style={[styles.question]}> 1000.33 + 299.99 </Text>
+          <Text style={[styles.question]}> {this.state.n1} {this.state.expr} {this.state.n2} </Text>
           <Text style={[styles.question]}> = </Text>
           <View style={[styles.answerLayout]}>
-            <Text style={[styles.answer]}>23053 </Text>
+            <Text style={[styles.answer]}> {this.state.userAnswer} </Text>
           </View>
         </View>
         <View style={[styles.buttonLayout], {marginTop: 20}}>
           <View style={[styles.buttonRow]}>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(7)}>
               <View>
                 <Text style={[styles.buttonValue]}> 7 </Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(8)}>
               <View>
                 <Text style={[styles.buttonValue]}> 8 </Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(9)}>
               <View>
                 <Text style={[styles.buttonValue]}> 9 </Text>
               </View>
@@ -48,14 +99,14 @@ export default class GameScreen extends Component {
           <View style={[styles.buttonRow]}>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(4)}>
               <View>
                 <Text style={[styles.buttonValue]}> 4 </Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(5)}>
               <View>
                 <Text style={[styles.buttonValue]}> 5 </Text>
 
@@ -63,7 +114,7 @@ export default class GameScreen extends Component {
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(6)}>
               <View>
                 <Text style={[styles.buttonValue]}> 6 </Text>
               </View>
@@ -72,22 +123,21 @@ export default class GameScreen extends Component {
           <View style={[styles.buttonRow]}>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(1)}>
               <View>
                 <Text style={[styles.buttonValue]}> 1 </Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(2)}>
               <View>
                 <Text style={[styles.buttonValue]}> 2 </Text>
-
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(3)}>
               <View>
                 <Text style={[styles.buttonValue]}> 3 </Text>
               </View>
@@ -96,14 +146,14 @@ export default class GameScreen extends Component {
           <View style={[styles.buttonRow]}>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton(0)}>
               <View>
                 <Text style={[styles.buttonValue]}> 0 </Text>
               </View>
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton('.')}>
               <View>
                 <Text style={[styles.buttonValue]}> . </Text>
 
@@ -111,7 +161,7 @@ export default class GameScreen extends Component {
             </TouchableHighlight>
             <TouchableHighlight
               style={[styles.button]}
-              onPress={this._onPressButton}>
+              onPress={() => this.onPressButton('*')}>
               <View>
                 <Image
                   source={require('../images/delete.png')}
@@ -161,6 +211,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5,
     minWidth: 200,
+    minHeight: 50
   },
   answer: {
     color: '#383547',
