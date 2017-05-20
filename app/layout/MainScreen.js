@@ -6,7 +6,7 @@ import {
   Text,
   ScrollView,
   Image,
-  TouchableHighlight,
+  TouchableNativeFeedback
 } from 'react-native';
 
 import Colors from '../util/Colors';
@@ -29,36 +29,40 @@ export default class MainScreen extends Component {
           <Text style={[styles.appTitle]}> Speed Math </Text>
         </View>
         <ScrollView style={{ marginTop: 30 }}>
-          <TouchableHighlight onPress={() =>
-            navigate('GameScreen', { mode: Constants.EASY });
-          }>
+          <TouchableNativeFeedback
+            onPress={() => navigate('GameScreen', { mode: 'EASY' })}
+            background={TouchableNativeFeedback.SelectableBackground()}
+          >
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                Constants.EASY
+                {Constants.EASY}
               </Text>
             </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this._onPressButton}>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback
+          background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                Constants.MEDIUM
+                {Constants.MEDIUM}
               </Text>
             </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this._onPressButton}>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback
+          background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                Constants.HARD
+                {Constants.HARD}
               </Text>
             </View>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={this._onPressButton}>
+          </TouchableNativeFeedback>
+          <TouchableNativeFeedback
+          background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
                 BEST SCORES
               </Text>
             </View>
-          </TouchableHighlight>
+          </TouchableNativeFeedback>
           <View
             style={{
               flex: 1,
@@ -66,26 +70,29 @@ export default class MainScreen extends Component {
               alignSelf: 'center',
               marginTop: 20,
             }}>
-            <TouchableHighlight onPress={this._onPressButton}>
+            <TouchableNativeFeedback
+            background={TouchableNativeFeedback.SelectableBackground()}>
               <Image
                 source={require('../images/settings.png')}
                 style={{ width: 50, height: 50, margin: 5 }}
               />
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
 
-            <TouchableHighlight onPress={this._onPressButton}>
+            <TouchableNativeFeedback
+            background={TouchableNativeFeedback.SelectableBackground()}>
               <Image
                 source={require('../images/practice.png')}
                 style={{ width: 50, height: 50, margin: 5 }}
               />
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
 
-            <TouchableHighlight onPress={this._onPressButton}>
+            <TouchableNativeFeedback
+            background={TouchableNativeFeedback.SelectableBackground()}>
               <Image
                 source={require('../images/help.png')}
                 style={{ width: 50, height: 50, margin: 5 }}
               />
-            </TouchableHighlight>
+            </TouchableNativeFeedback> 
 
           </View>
         </ScrollView>

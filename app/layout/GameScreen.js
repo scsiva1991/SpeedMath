@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
 
-import { View, Text, StyleSheet, TouchableHighlight, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableNativeFeedback } from 'react-native';
 
 import Constants from '../util/Constants';
+import Fonts from '../util/Fonts';
 
 export default class GameScreen extends Component {
 
   constructor(props) {
     super();
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', mode : Constants.EASY };
+    console.log('-- hello ---');
+
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', mode : '', score: 0};
   }
 
   componentWillMount() {
-     this.setState({ mode: this.props.mode });
-     this.setQuestion();
+     //this.setState({ mode: this.props.mode });
+     const { params } = this.props.navigation.state;
+     console.log('--- mode ---', params.mode);
+     this.setQuestion( params.mode );
+     this.setState({ mode: params.mode })
   }
 
-  onPressButton = () => {
+  onPressButton = (i) => {
     if(parseFloat(this.state.userAnswer+i) == this.state.answer) {
-      this.setState({score: this.state.score + 1, userAnswer: ''});
-      this.setQuestion();
+      this.setState({
+        userAnswer: this.state.userAnswer + i
+      });
+      setTimeout(function() {
+        this.setState({score: this.state.score + 1, userAnswer: ''});
+        this.setQuestion( this.state.mode );
+      }.bind(this), 250);
     } else if(i === '*') {
       let removedNumber = this.state.userAnswer.split('').splice(0, this.state.userAnswer.length-1);
       this.setState({
@@ -32,26 +43,24 @@ export default class GameScreen extends Component {
     }
   }
 
-  setQuestion() {
+  setQuestion( mode ) {
     let n1 = 0, n2 = 0;
     let exprArr = Constants.EXPRESSIONS;
     let expr = exprArr[ Math.floor(Math.random() * exprArr.length)];
     let answer = 0;
 
-    if( this.state.mode == Constants.EASY ) {
+    if( mode == Constants.EASY ) {
       n1 = Math.floor(Math.random() * Constants.EASY_NUM2) + 1;
       n2 = Math.floor(Math.random() * n1) + 1;
-      answer = Number(eval( n1 + expr + n2)).toFixed(2);
-    } else if( this.state.mode == Constants.MEDIUM ) {
+    } else if( mode == Constants.MEDIUM ) {
       n1 = Math.floor(Math.random() * Constants.MEDIUM_NUM2) + 1;
       n2 = Math.floor(Math.random() * n1) + 1;
-      answer = Number(eval( n1 + expr + n2)).toFixed(2);
     } else {
       n1 = Math.floor(Math.random() * Constants.HARD_NUM2) + 1;
       n2 = Math.floor(Math.random() * n1) + 1;
-      answer = Number(eval( n1 + expr + n2)).toFixed(2);
     }
-    this.setState({n1: n1, n2 : n2, expr: expr, answer: answer}); 
+    answer = parseInt(eval( n1 + expr + n2) * 100)/100;
+    this.setState({n1: n1, n2 : n2, expr: expr, answer: answer});
   }
 
   render() {
@@ -62,7 +71,7 @@ export default class GameScreen extends Component {
             <Text>progressBar</Text>
           </View>
           <View style={{marginRight: 5}}>
-            <Text style={{color: '#fff'}}>Score: 0</Text>
+            <Text style={[styles.score]}>Score: {this.state.score}</Text>
           </View>
         </View>
         <View style={[styles.gameLayout]}>
@@ -74,100 +83,101 @@ export default class GameScreen extends Component {
         </View>
         <View style={[styles.buttonLayout], {marginTop: 20}}>
           <View style={[styles.buttonRow]}>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(7)}>
-              <View>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(7)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View
+                style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 7 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(8)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(8)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 8 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(9)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(9)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 9 </Text>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View style={[styles.buttonRow]}>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(4)}>
-              <View>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(4)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 4 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(5)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(5)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 5 </Text>
 
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(6)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(6)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 6 </Text>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View style={[styles.buttonRow]}>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(1)}>
-              <View>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(1)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 1 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(2)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(2)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 2 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(3)}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(3)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 3 </Text>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View style={[styles.buttonRow]}>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton(0)}>
-              <View>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton(0)}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> 0 </Text>
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton('.')}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton('.')}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Text style={[styles.buttonValue]}> . </Text>
 
               </View>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={[styles.button]}
-              onPress={() => this.onPressButton('*')}>
-              <View>
+            </TouchableNativeFeedback>
+            <TouchableNativeFeedback
+              onPress={() => this.onPressButton('*')}
+              background={TouchableNativeFeedback.SelectableBackground()}>
+              <View style={[styles.button]}>
                 <Image
                   source={require('../images/delete.png')}
                 />
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
         </View>
       </View>
@@ -191,6 +201,8 @@ const styles = StyleSheet.create({
   score: {
     marginRight: 5,
     color: '#fff',
+    fontFamily: Fonts.OpenSansRegular,
+    fontSize: 20
   },
   gameLayout: {
     backgroundColor: '#30D1D5',
@@ -204,8 +216,7 @@ const styles = StyleSheet.create({
   question: {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 20,
-    margin: 5,
+    fontSize: 30,
   },
   answerLayout: {
     backgroundColor: '#fff',
@@ -216,9 +227,11 @@ const styles = StyleSheet.create({
   answer: {
     color: '#383547',
     textAlign: 'center',
-    fontSize: 20
+    fontSize: 30
   },
-  buttonLayout: {},
+  buttonLayout: {
+    flex: 1
+  },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
