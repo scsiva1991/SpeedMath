@@ -4,7 +4,6 @@ import {
   View,
   Text,
   Alert,
-  BackAndroid,
   StatusBar,
   Navigator
 } from 'react-native';
@@ -15,12 +14,14 @@ import {
 
 import SplashScreen from './layout/SplashScreen';
 import MainScreen from './layout/MainScreen';
-import GameScreen from './layout/GameScreen'
+import GameScreen from './layout/GameScreen';
+import BestScoresScreen from './layout/BestScoresScreen';
 
 export default StackNavigator({
   SplashScreen: { screen: SplashScreen },
   MainScreen: { screen: MainScreen },
-  GameScreen: { screen: GameScreen }
+  GameScreen: { screen: GameScreen },
+  BestScoresScreen: { screen: BestScoresScreen}
 }, {
   headerMode: 'none'
 })

@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#444153',
     padding: 10,
-    marginTop: 25,
     borderWidth: 1,
     borderColor: '#fff',
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderTopWidth: 0,
+    height: 50
   },
   headerText: {
     color: '#fff',

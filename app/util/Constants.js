@@ -8,5 +8,6 @@ module.exports = {
   MEDIUM_NUM1 : 50,
   MEDIUM_NUM2 : 1000,
   HARD_NUM1 : 1000,
-  HARD_NUM2 : 10000
+  HARD_NUM2 : 10000,
+  KEY_SCORES: 'KEY_SCORES'
 }

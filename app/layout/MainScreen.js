@@ -12,13 +12,26 @@ import {
 import Colors from '../util/Colors';
 import Fonts from '../util/Fonts';
 import Constants from '../util/Constants';
+import AsyncStorage from '../util/AsyncStorage';
 import { NavigationActions } from 'react-navigation'
 
 export default class MainScreen extends Component {
+
+  componentWillMount() {
+    AsyncStorage.getJsonObject(Constants.KEY_SCORES, (result) => {
+      console.log( ' -- result --', result );
+      //if( result == null ) {
+        AsyncStorage.saveJSONValues( Constants.KEY_SCORES, {
+          'EASY' : [0, 0, 0],
+          'MEDIUM' : [0, 0, 0],
+          'HARD' : [0, 0, 0]
+        }); 
+      //}
+    });
+  }
+
   render() {
-
     const { navigate } = this.props.navigation;
-
     return (
       <View
         style={{
@@ -92,7 +105,7 @@ export default class MainScreen extends Component {
                 source={require('../images/help.png')}
                 style={{ width: 50, height: 50, margin: 5 }}
               />
-            </TouchableNativeFeedback> 
+            </TouchableNativeFeedback>
 
           </View>
         </ScrollView>

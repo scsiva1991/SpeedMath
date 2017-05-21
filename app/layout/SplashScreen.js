@@ -10,11 +10,11 @@ import {
 
 import Fonts from '../util/Fonts';
 import Colors from '../util/Colors';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 
 export default class SplashScreen extends Component {
 
-  componentDidMount () { 
+  componentDidMount () {
     this.navigateTo('MainScreen');
   }
 
