@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Image,
   Text,
-  Alert
+  Alert,
+  StatusBar
 } from 'react-native';
 
 import Fonts from '../util/Fonts';
@@ -13,6 +14,11 @@ import Colors from '../util/Colors';
 import { NavigationActions } from 'react-navigation';
 
 export default class SplashScreen extends Component {
+
+  constructor(props){
+   super(props);
+   StatusBar.setBackgroundColor(Colors.darkColor,false);
+ }
 
   componentDidMount () {
     this.navigateTo('MainScreen');

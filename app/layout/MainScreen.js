@@ -13,7 +13,7 @@ import Colors from '../util/Colors';
 import Fonts from '../util/Fonts';
 import Constants from '../util/Constants';
 import AsyncStorage from '../util/AsyncStorage';
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions } from 'react-navigation';
 
 export default class MainScreen extends Component {
 
@@ -25,7 +25,7 @@ export default class MainScreen extends Component {
           'EASY' : [0, 0, 0],
           'MEDIUM' : [0, 0, 0],
           'HARD' : [0, 0, 0]
-        }); 
+        });
       //}
     });
   }
@@ -36,46 +36,35 @@ export default class MainScreen extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#383547',
+          backgroundColor: '#444153',
         }}>
         <View style={[styles.appTitleBox]}>
           <Text style={[styles.appTitle]}> Speed Math </Text>
         </View>
         <ScrollView style={{ marginTop: 30 }}>
-          <TouchableNativeFeedback
-            onPress={() => navigate('GameScreen', { mode: 'EASY' })}
-            background={TouchableNativeFeedback.SelectableBackground()}
-          >
+          <Text style={[styles.intro]}>
+            The Speed Math Game is a fully customizable fast-paced speed drill
+            where you are given a minute to solve as many arithmetic
+            problems you can.
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginTop: 20,
+            }}>
+            <TouchableNativeFeedback
+              onPress={() => navigate('GameScreen')}
+              background={TouchableNativeFeedback.SelectableBackground()}
+            >
             <View style={[styles.menuBorder]}>
               <Text style={[styles.menuText]}>
-                {Constants.EASY}
+                START
               </Text>
             </View>
           </TouchableNativeFeedback>
-          <TouchableNativeFeedback
-          background={TouchableNativeFeedback.SelectableBackground()}>
-            <View style={[styles.menuBorder]}>
-              <Text style={[styles.menuText]}>
-                {Constants.MEDIUM}
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback
-          background={TouchableNativeFeedback.SelectableBackground()}>
-            <View style={[styles.menuBorder]}>
-              <Text style={[styles.menuText]}>
-                {Constants.HARD}
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback
-          background={TouchableNativeFeedback.SelectableBackground()}>
-            <View style={[styles.menuBorder]}>
-              <Text style={[styles.menuText]}>
-                BEST SCORES
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
+          </View>
           <View
             style={{
               flex: 1,
@@ -86,7 +75,7 @@ export default class MainScreen extends Component {
             <TouchableNativeFeedback
             background={TouchableNativeFeedback.SelectableBackground()}>
               <Image
-                source={require('../images/settings.png')}
+                source={require('../images/settings@1x.png')}
                 style={{ width: 50, height: 50, margin: 5 }}
               />
             </TouchableNativeFeedback>
@@ -127,8 +116,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: Fonts.OpenSansRegular,
   },
+  intro : {
+    textAlign: 'center',
+    color: '#fff',
+    fontSize: 20,
+    margin: 20,
+    padding: 10,
+    fontFamily: Fonts.OpenSansItalic
+  },
   menuBorder: {
-    width: 200,
+    width: 150,
     alignSelf: 'center',
     margin: 10,
   },

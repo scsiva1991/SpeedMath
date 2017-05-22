@@ -8,5 +8,6 @@ module.exports = {
   OpenSansLightItalic: 'OpenSans-LightItalic',
   OpenSansRegular: 'OpenSans',
   OpenSansSemibold: 'OpenSans-Semibold',
-  OpenSansSemiboldItalic: 'OpenSans-SemiboldItalic'
+  OpenSansSemiboldItalic: 'OpenSans-SemiboldItalic',
+  HackRegular: 'Hack-Regular'
 }

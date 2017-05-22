@@ -15,7 +15,7 @@ export default class BestScoresScreen extends Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#383547',
+          backgroundColor: '#444153',
         }}>
         <View style={[styles.header]}>
           <Text style={[styles.headerText]}> Best Scores </Text>

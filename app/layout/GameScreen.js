@@ -20,13 +20,12 @@ export default class GameScreen extends Component {
   constructor(props) {
     super();
     this.showAlert = this.showAlert.bind(this);
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', mode : '', score: 0, time : 10};
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10};
   }
 
   componentWillMount() {
      const { params } = this.props.navigation.state;
-     this.setQuestion( params.mode );
-     this.setState({ mode: params.mode });
+     this.setQuestion();
   }
 
   componentDidMount() {
@@ -35,7 +34,7 @@ export default class GameScreen extends Component {
     var interval = setInterval(function() {
       var t1 = _this.state.time - 1;
       if( t1 == 0 ) {
-        _this.checkHighScore();
+        //_this.checkHighScore();
         clearInterval( interval );
       }
       _this.setState({ time: t1, interval: interval});
@@ -68,7 +67,7 @@ export default class GameScreen extends Component {
           });
           result[ mode ] = modeResult;
           AsyncStorage.saveJSONValues( Constants.KEY_SCORES, {
-            result['result']
+            result
           });
         }
         console.log( '-- easy result ---', result, result[mode]);
@@ -109,7 +108,7 @@ export default class GameScreen extends Component {
       });
       setTimeout(function() {
         this.setState({score: this.state.score + 1, userAnswer: ''});
-        this.setQuestion( this.state.mode );
+        this.setQuestion();
       }.bind(this), 250);
     } else if(i === '*') {
       let removedNumber = this.state.userAnswer.split('').splice(0, this.state.userAnswer.length-1);
@@ -123,22 +122,16 @@ export default class GameScreen extends Component {
     }
   }
 
-  setQuestion( mode ) {
-    let n1 = 0, n2 = 0;
+  setQuestion() {
     let exprArr = Constants.EXPRESSIONS;
-    let expr = exprArr[ Math.floor(Math.random() * exprArr.length)];
+    let ranges = Constants.RANGES;
+    let randomNum = Math.floor(Math.random() * exprArr.length);
+    let expr = exprArr[ randomNum ];
     let answer = 0;
 
-    if( mode == Constants.EASY ) {
-      n1 = Math.floor(Math.random() * Constants.EASY_NUM2) + 1;
-      n2 = Math.floor(Math.random() * n1) + 1;
-    } else if( mode == Constants.MEDIUM ) {
-      n1 = Math.floor(Math.random() * Constants.MEDIUM_NUM2) + 1;
-      n2 = Math.floor(Math.random() * n1) + 1;
-    } else {
-      n1 = Math.floor(Math.random() * Constants.HARD_NUM2) + 1;
-      n2 = Math.floor(Math.random() * n1) + 1;
-    }
+    let n1 = Math.floor(Math.random() * ranges[ randomNum ]) + 1;
+    let n2 = Math.floor(Math.random() * n1) + 1;
+
     answer = parseInt(eval( n1 + expr + n2) * 100)/100;
     this.setState({n1: n1, n2 : n2, expr: expr, answer: answer});
   }
@@ -268,7 +261,7 @@ export default class GameScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#383547',
+    backgroundColor: '#444153',
   },
   gameTopLayout: {
     marginTop: 50,
@@ -320,7 +313,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   button: {
-    backgroundColor: '#444153',
+    backgroundColor: '#383547',
     height: 50,
     margin: 1,
     flex: 1,
