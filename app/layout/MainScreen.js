@@ -18,13 +18,13 @@ import { NavigationActions } from 'react-navigation';
 export default class MainScreen extends Component {
 
   componentWillMount() {
-    AsyncStorage.getJsonObject(Constants.KEY_SCORES, (result) => {
+    AsyncStorage.getJsonObject(Constants.KEY_SPEED_MATH, (result) => {
       console.log( ' -- result --', result );
       //if( result == null ) {
-        AsyncStorage.saveJSONValues( Constants.KEY_SCORES, {
-          'EASY' : [0, 0, 0],
-          'MEDIUM' : [0, 0, 0],
-          'HARD' : [0, 0, 0]
+        AsyncStorage.saveJSONValues( Constants.KEY_SPEED_MATH, {
+          'RANGES' : Constants.RANGES,
+          'DURATION' : Constants.DURATION,
+          'HIGH_SCORES' : [0, 0, 0]
         });
       //}
     });

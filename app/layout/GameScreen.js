@@ -25,7 +25,12 @@ export default class GameScreen extends Component {
 
   componentWillMount() {
      const { params } = this.props.navigation.state;
-     this.setQuestion();
+     AsyncStorage.getJsonObject(Constants.KEY_SPEED_MATH, (result) => {
+       console.log( ' -- result --', result );
+       this.setState({ oldResult : result });
+       this.setQuestion();
+     });
+
   }
 
   componentDidMount() {
@@ -124,7 +129,8 @@ export default class GameScreen extends Component {
 
   setQuestion() {
     let exprArr = Constants.EXPRESSIONS;
-    let ranges = Constants.RANGES;
+    console.log('-- this.state.oldResult --', this.state.oldResult);
+    let ranges = this.state.oldResult.RANGES;
     let randomNum = Math.floor(Math.random() * exprArr.length);
     let expr = exprArr[ randomNum ];
     let answer = 0;
