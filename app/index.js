@@ -16,12 +16,14 @@ import SplashScreen from './layout/SplashScreen';
 import MainScreen from './layout/MainScreen';
 import GameScreen from './layout/GameScreen';
 import BestScoresScreen from './layout/BestScoresScreen';
+import CongratsScreen from './layout/CongratsScreen';
 
 export default StackNavigator({
   SplashScreen: { screen: SplashScreen },
   MainScreen: { screen: MainScreen },
   GameScreen: { screen: GameScreen },
-  BestScoresScreen: { screen: BestScoresScreen}
+  BestScoresScreen: { screen: BestScoresScreen},
+  CongratsScreen: { screen: CongratsScreen}
 }, {
   headerMode: 'none'
 })

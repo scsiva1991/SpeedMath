@@ -7,6 +7,12 @@ import {
   StyleSheet
 } from 'react-native';
 
+import Colors from '../util/Colors';
+import Fonts from '../util/Fonts';
+import Constants from '../util/Constants';
+import AsyncStorage from '../util/AsyncStorage';
+import { NavigationActions } from 'react-navigation';
+
 export default class CongratsScreen extends Component {
   render() {
     return(
@@ -17,7 +23,7 @@ export default class CongratsScreen extends Component {
           <Text style={[styles.score]}> 8 </Text>
           <View>
             <Text style={[styles.successMessage]}> New Best Score! </Text>
-            <Image source={require('../images/badge.png')} style={[styles.badge]}></Image>
+            <Image source={require('../images/congrats.png')} style={[styles.badge]}></Image>
           </View>
         </View>
         </ScrollView>
@@ -33,10 +39,11 @@ const styles = StyleSheet.create({
   successText : {
     textAlign: 'center',
     color: '#fff',
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
     fontFamily: Fonts.OpenSansRegular,
-    margin: 10
+    margin: 10,
+    marginTop: 50
   },
   successMessage : {
     textAlign: 'center',

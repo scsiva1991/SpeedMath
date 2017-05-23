@@ -5,9 +5,14 @@ import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
 export default class BestScoresScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      scores1: [1, 23, 567],
-    };
+  }
+
+  componentWillMount() {
+    AsyncStorage.getJsonObject(Constants.KEY_SPEED_MATH, (result) => {
+      if( result == null ) {
+        this.setState({ scores: result.HIGH_SCORES });
+      }
+    });
   }
 
   render() {
@@ -22,39 +27,15 @@ export default class BestScoresScreen extends Component {
         </View>
         <ScrollView style={{ marginTop: 30 }}>
           <View style={[styles.menuBorder]}>
-            <Text style={[styles.menuText]}>
-              EASY
-            </Text>
 
             <FlatList
-              data={this.state.scores1}
+              data={this.state.scores}
               renderItem={({ item, index }) => (
                 <Text style={[styles.score]}>{index + 1} {') '} {item}</Text>
               )}
             />
           </View>
-          <View style={[styles.menuBorder]}>
-            <Text style={[styles.menuText]}>
-              MEDIUM
-            </Text>
-            <FlatList
-              data={[1, 2, 3]}
-              renderItem={({ item, index }) => (
-                <Text style={[styles.score]}>{index + 1} {') '} {item}</Text>
-              )}
-            />
-          </View>
-          <View style={[styles.menuBorder]}>
-            <Text style={[styles.menuText]}>
-              HARD
-            </Text>
-            <FlatList
-              data={[1, 2, 3]}
-              renderItem={({ item, index }) => (
-                <Text style={[styles.score]}>{index + 1} {') '} {item}</Text>
-              )}
-            />
-          </View>
+
         </ScrollView>
       </View>
     );

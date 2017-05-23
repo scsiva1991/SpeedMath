@@ -39,7 +39,7 @@ export default class GameScreen extends Component {
     var interval = setInterval(function() {
       var t1 = _this.state.time - 1;
       if( t1 == 0 ) {
-        //_this.checkHighScore();
+        _this.checkHighScore();
         clearInterval( interval );
       }
       _this.setState({ time: t1, interval: interval});
@@ -54,30 +54,28 @@ export default class GameScreen extends Component {
   }
 
   checkHighScore() {
-    AsyncStorage.getJsonObject(Constants.KEY_SCORES, (result) => {
-      if( result != null ) {
-        console.log( ' -- result --', result );
-        console.log( ' -- mode --', this.state.mode );
-        console.log( ' -- score --', this.state.score );
-        console.log( ' -- modeResult --', result[ mode ], result['EASY'] );
-        let mode = this.state.mode;
-        let modeResult = result[ mode ];
-        let score = this.state.score;
-        if( score > Math.min(...modeResult) ) {
-
-          modeResult.pop();
-          modeResult.push( score );
-          modeResult.sort(function(a, b) {
-            return b-a;
-          });
-          result[ mode ] = modeResult;
-          AsyncStorage.saveJSONValues( Constants.KEY_SCORES, {
-            result
-          });
-        }
-        console.log( '-- easy result ---', result, result[mode]);
-      }
+    let score = this.state.score;
+    let oldResult = this.state.oldResult;
+    let scoreList = oldResult.HIGH_SCORES;
+    if( score > Math.min(...scoreList) ) {
+      scoreList.pop();
+      scoreList.push( score );
+      scoreList.sort(function(a, b) {
+        return b-a;
+      });
+      oldResult.HIGH_SCORES = scoreList;
+      AsyncStorage.saveJSONValues( Constants.KEY_SPEED_MATH, {
+          'RANGES' : oldResult.RANGES,
+          'DURATION' : oldResult.DURATION,
+          'HIGH_SCORES' : oldResult.HIGH_SCORES
+      });
+    }
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'CongratsScreen' })],
     });
+
+    this.props.navigation.dispatch(resetAction);
   }
 
   showAlert() {
