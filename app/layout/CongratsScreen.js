@@ -16,23 +16,30 @@ import { NavigationActions } from 'react-navigation';
 
 export default class CongratsScreen extends Component {
 
-  navigateToHome = ( screenName ) => {
+  navigateToHome = ( routeName: string ) => {
     const actionToDispatch = NavigationActions.reset({
       index: 0,
-      actions: [NavigationActions.navigate({ screenName })]
+      actions: [NavigationActions.navigate({ routeName })]
     })
     this.props.navigation.dispatch(actionToDispatch)
   }
 
+  componentWillMount() {
+    const { params } = this.props.navigation.state;
+    console.log('===== params ====', params);
+    this.setState({ isHighScore: params.isHighScore, score: params.score});
+  }
+
   render() {
     const {navigate} = this.props.navigation;
+    //console.log('--- congrats navigate ---', navigate);
     return(
       <ScrollView style={[styles.container]}>
         <View>
           <Text style={[styles.successText]}> Congratulations! </Text>
           <Text style={[styles.successMessage]}> Your total score for this round is</Text>
-          <Text style={[styles.score]}> {navigate.params.score} </Text>
-          { navigate.params.isHighScore &&
+          <Text style={[styles.score]}> {this.state.score} </Text>
+          { this.state.isHighScore &&
             <View>
               <Text style={[styles.successMessage]}> New Best Score! </Text>
               <Image source={require('../images/winner.png')} style={[styles.icon_center, styles.margin_10]}></Image>
@@ -41,7 +48,7 @@ export default class CongratsScreen extends Component {
           <TouchableNativeFeedback
           background={TouchableNativeFeedback.SelectableBackground()} style={{marginTop: 20}}
           onPress={() => navigate('GameScreen')}>
-            <Image source={require('../images/reload_icon.png')} style={[styles.icon_center, styles.margin_10]}></Image>
+            <Image source={require('../images/reload_icon_1.png')} style={[styles.icon_center, styles.margin_10]}></Image>
           </TouchableNativeFeedback>
           <View
             style={{
@@ -52,7 +59,7 @@ export default class CongratsScreen extends Component {
             }}>
             <TouchableNativeFeedback
             background={TouchableNativeFeedback.SelectableBackground()}
-            onPress={() => navigateToHome('HomeScreen')}>
+            onPress={() => this.navigateToHome('MainScreen')}>
               <Image
                 source={require('../images/home_icon.png')}
                 style={{ margin: 5 }}
@@ -60,12 +67,13 @@ export default class CongratsScreen extends Component {
             </TouchableNativeFeedback>
             <TouchableNativeFeedback
             background={TouchableNativeFeedback.SelectableBackground()}
-            onPress={() => navigateToHome('SettingsScreen')}>
+            onPress={() => navigate('SettingsScreen')}>
               <Image
                 source={require('../images/settings_icon.png')}
-                style={{ margin: 5 }}
+                style={{ margin: 5, marginLeft: 50}}
               />
             </TouchableNativeFeedback>
+          </View>
         </View>
       </ScrollView>
     )

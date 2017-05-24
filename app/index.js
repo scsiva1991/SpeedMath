@@ -18,6 +18,7 @@ import MainScreen from './layout/MainScreen';
 import GameScreen from './layout/GameScreen';
 import BestScoresScreen from './layout/BestScoresScreen';
 import CongratsScreen from './layout/CongratsScreen';
+import SettingsScreen from './layout/SettingsScreen';
 
 export default StackNavigator(
   {
@@ -25,7 +26,8 @@ export default StackNavigator(
     MainScreen: { screen: MainScreen },
     GameScreen: { screen: GameScreen },
     BestScoresScreen: { screen: BestScoresScreen},
-    CongratsScreen: { screen: CongratsScreen}
+    CongratsScreen: { screen: CongratsScreen},
+    SettingsScreen: { screen: SettingsScreen}
   }, {
     headerMode: 'none',
     mode: Platform.OS === 'ios' ? 'modal' : 'card'

@@ -14,17 +14,18 @@ import Constants from '../util/Constants';
 import Fonts from '../util/Fonts';
 import AsyncStorage from '../util/AsyncStorage';
 import { NavigationActions } from 'react-navigation';
+import Bounce from '../components/Bounce';
 
 export default class GameScreen extends Component {
 
   constructor(props) {
     super();
     this.showAlert = this.showAlert.bind(this);
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10};
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10, scored: false};
   }
 
   componentWillMount() {
-     const { params } = this.props.navigation.state;
+
      AsyncStorage.getJsonObject(Constants.KEY_SPEED_MATH, (result) => {
        console.log( ' -- result --', result );
        this.setState({ oldResult : result });
@@ -74,8 +75,6 @@ export default class GameScreen extends Component {
       });
       isHighScore = true;
     }
-
-
     this.props.navigation.navigate('CongratsScreen', {isHighScore: isHighScore, score: score});
   }
 
@@ -108,10 +107,11 @@ export default class GameScreen extends Component {
   onPressButton = (i) => {
     if(parseFloat(this.state.userAnswer+i) == this.state.answer) {
       this.setState({
-        userAnswer: this.state.userAnswer + i
+        userAnswer: this.state.userAnswer + i,
+        scored: true
       });
       setTimeout(function() {
-        this.setState({score: this.state.score + 1, userAnswer: ''});
+        this.setState({score: this.state.score + 1, userAnswer: '', scored: false});
         this.setQuestion();
       }.bind(this), 250);
     } else if(i === '*') {
@@ -149,7 +149,7 @@ export default class GameScreen extends Component {
             <Text style={[styles.score]}>{this.state.time}</Text>
           </View>
           <View style={{marginRight: 5}}>
-            <Text style={[styles.score]}>Score: {this.state.score}</Text>
+            <Bounce score={this.state.score} scored={this.state.scored}/>
           </View>
         </View>
         <View style={[styles.gameLayout]}>
