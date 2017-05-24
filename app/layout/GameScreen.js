@@ -57,6 +57,9 @@ export default class GameScreen extends Component {
     let score = this.state.score;
     let oldResult = this.state.oldResult;
     let scoreList = oldResult.HIGH_SCORES;
+    const { navigate } = this.props.navigation;
+    let isHighScore = false;
+
     if( score > Math.min(...scoreList) ) {
       scoreList.pop();
       scoreList.push( score );
@@ -69,13 +72,11 @@ export default class GameScreen extends Component {
           'DURATION' : oldResult.DURATION,
           'HIGH_SCORES' : oldResult.HIGH_SCORES
       });
+      isHighScore = true;
     }
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'CongratsScreen' })],
-    });
 
-    this.props.navigation.dispatch(resetAction);
+
+    this.props.navigation.navigate('CongratsScreen', {isHighScore: isHighScore, score: score});
   }
 
   showAlert() {

@@ -5,7 +5,8 @@ import {
   Text,
   Alert,
   StatusBar,
-  Navigator
+  Navigator,
+  Platform
 } from 'react-native';
 
 import {
@@ -18,12 +19,15 @@ import GameScreen from './layout/GameScreen';
 import BestScoresScreen from './layout/BestScoresScreen';
 import CongratsScreen from './layout/CongratsScreen';
 
-export default StackNavigator({
-  SplashScreen: { screen: SplashScreen },
-  MainScreen: { screen: MainScreen },
-  GameScreen: { screen: GameScreen },
-  BestScoresScreen: { screen: BestScoresScreen},
-  CongratsScreen: { screen: CongratsScreen}
-}, {
-  headerMode: 'none'
-})
+export default StackNavigator(
+  {
+    SplashScreen: { screen: SplashScreen },
+    MainScreen: { screen: MainScreen },
+    GameScreen: { screen: GameScreen },
+    BestScoresScreen: { screen: BestScoresScreen},
+    CongratsScreen: { screen: CongratsScreen}
+  }, {
+    headerMode: 'none',
+    mode: Platform.OS === 'ios' ? 'modal' : 'card'
+  }
+)

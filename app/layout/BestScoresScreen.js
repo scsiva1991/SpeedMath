@@ -25,18 +25,19 @@ export default class BestScoresScreen extends Component {
         <View style={[styles.header]}>
           <Text style={[styles.headerText]}> Best Scores </Text>
         </View>
-        <ScrollView style={{ marginTop: 30 }}>
-          <View style={[styles.menuBorder]}>
-
+        <View style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
             <FlatList
               data={this.state.scores}
               renderItem={({ item, index }) => (
-                <Text style={[styles.score]}>{index + 1} {') '} {item}</Text>
+                <Text style={[styles.score]}>{index + 1} {')  '} {item}</Text>
               )}
             />
           </View>
-
-        </ScrollView>
       </View>
     );
   }
