@@ -15,17 +15,17 @@ import Fonts from '../util/Fonts';
 import AsyncStorage from '../util/AsyncStorage';
 import { NavigationActions } from 'react-navigation';
 import Bounce from '../components/Bounce';
+import FadeInView from '../components/FadeInView';
 
 export default class GameScreen extends Component {
 
   constructor(props) {
     super();
     this.showAlert = this.showAlert.bind(this);
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10, scored: false};
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10, scored: true, newQuestion : true};
   }
 
   componentWillMount() {
-
      AsyncStorage.getJsonObject(Constants.KEY_SPEED_MATH, (result) => {
        console.log( ' -- result --', result );
        this.setState({ oldResult : result });
@@ -108,10 +108,12 @@ export default class GameScreen extends Component {
     if(parseFloat(this.state.userAnswer+i) == this.state.answer) {
       this.setState({
         userAnswer: this.state.userAnswer + i,
-        scored: true
+        scored: true,
+        newQuestion : false,
+        scored: false
       });
       setTimeout(function() {
-        this.setState({score: this.state.score + 1, userAnswer: '', scored: false});
+        this.setState({score: this.state.score + 1, userAnswer: '', scored: true, newQuestion: true});
         this.setQuestion();
       }.bind(this), 250);
     } else if(i === '*') {
@@ -148,16 +150,20 @@ export default class GameScreen extends Component {
           <View style={[styles.progressBar]}>
             <Text style={[styles.score]}>{this.state.time}</Text>
           </View>
-          <View style={{marginRight: 5}}>
-            <Bounce score={this.state.score} scored={this.state.scored}/>
-          </View>
+          { this.state.scored &&
+            <FadeInView style={{marginRight: 5}}>
+              <Text >{this.state.score}</Text>
+            </FadeInView>
+          }
         </View>
         <View style={[styles.gameLayout]}>
           <Text style={[styles.question]}> {this.state.n1} {this.state.expr} {this.state.n2} </Text>
           <Text style={[styles.question]}> = </Text>
-          <View style={[styles.answerLayout]}>
-            <Text style={[styles.answer]}> {this.state.userAnswer} </Text>
-          </View>
+          { this.state.newQuestion &&
+            <FadeInView style={[styles.answerLayout]}>
+              <Text style={[styles.answer]}> {this.state.userAnswer} </Text>
+            </FadeInView>
+          }
         </View>
         <View style={[styles.buttonLayout], {marginTop: 20}}>
           <View style={[styles.buttonRow]}>
