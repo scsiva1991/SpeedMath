@@ -54,6 +54,7 @@ export default class MainScreen extends Component {
               alignSelf: 'center',
               marginTop: 20,
             }}>
+            
             <TouchableNativeFeedback
               onPress={() => navigate('GameScreen')}
               background={TouchableNativeFeedback.SelectableBackground()}

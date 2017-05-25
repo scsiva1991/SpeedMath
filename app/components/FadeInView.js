@@ -18,8 +18,7 @@ export default class FadeInView extends Component {
     Animated.timing(
       this.state.fadeAnim,
       {
-        toValue: 1,
-        duration: 1000
+        toValue: 1 
       }
     ).start()
   }
@@ -27,7 +26,7 @@ export default class FadeInView extends Component {
   render() {
     return(
       <Animated.View
-      styles={{
+      style={{
         ...this.props.style,
         opacity: this.state.fadeAnim
       }}>

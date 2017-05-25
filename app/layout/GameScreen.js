@@ -14,15 +14,16 @@ import Constants from '../util/Constants';
 import Fonts from '../util/Fonts';
 import AsyncStorage from '../util/AsyncStorage';
 import { NavigationActions } from 'react-navigation';
-import Bounce from '../components/Bounce';
 import FadeInView from '../components/FadeInView';
+import * as Progress from 'react-native-progress';
 
 export default class GameScreen extends Component {
 
   constructor(props) {
     super();
     this.showAlert = this.showAlert.bind(this);
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10, scored: true, newQuestion : true};
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10,
+    scored: 'true', newQuestion : 'true', progress: 0};
   }
 
   componentWillMount() {
@@ -37,13 +38,18 @@ export default class GameScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.showAlert);
     const _this = this;
+    let progress = 0;
     var interval = setInterval(function() {
-      var t1 = _this.state.time - 1;
+      let t1 = _this.state.time - 1;
       if( t1 == 0 ) {
         _this.checkHighScore();
         clearInterval( interval );
       }
-      _this.setState({ time: t1, interval: interval});
+      progress += Math.random() / 5;
+        if (progress > 1) {
+          progress = 1;
+        }
+      _this.setState({ time: t1, interval: interval, progress: progress});
     }, 1000);
   }
 
@@ -108,12 +114,11 @@ export default class GameScreen extends Component {
     if(parseFloat(this.state.userAnswer+i) == this.state.answer) {
       this.setState({
         userAnswer: this.state.userAnswer + i,
-        scored: true,
-        newQuestion : false,
-        scored: false
+        scored: 'false',
+        newQuestion : 'false '
       });
       setTimeout(function() {
-        this.setState({score: this.state.score + 1, userAnswer: '', scored: true, newQuestion: true});
+        this.setState({score: this.state.score + 1, userAnswer: '', scored: 'true', newQuestion: 'true'});
         this.setQuestion();
       }.bind(this), 250);
     } else if(i === '*') {
@@ -148,22 +153,21 @@ export default class GameScreen extends Component {
       <View style={[styles.container]}>
         <View style={[styles.gameTopLayout]}>
           <View style={[styles.progressBar]}>
-            <Text style={[styles.score]}>{this.state.time}</Text>
+            <Progress.Pie color={'#30D1D5'} progress={this.state.progress} size={50} />
           </View>
-          { this.state.scored &&
+          { this.state.scored == 'true' &&
             <FadeInView style={{marginRight: 5}}>
-              <Text >{this.state.score}</Text>
+              <Text style={[styles.score]}>{this.state.score}</Text>
             </FadeInView>
           }
         </View>
         <View style={[styles.gameLayout]}>
           <Text style={[styles.question]}> {this.state.n1} {this.state.expr} {this.state.n2} </Text>
-          <Text style={[styles.question]}> = </Text>
-          { this.state.newQuestion &&
-            <FadeInView style={[styles.answerLayout]}>
+          <Text style={[styles.question]}> =</Text>
+
+            <View style={[styles.answerLayout]}>
               <Text style={[styles.answer]}> {this.state.userAnswer} </Text>
-            </FadeInView>
-          }
+            </View>
         </View>
         <View style={[styles.buttonLayout], {marginTop: 20}}>
           <View style={[styles.buttonRow]}>
@@ -286,7 +290,7 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: '#fff',
     fontFamily: Fonts.OpenSansRegular,
-    fontSize: 20
+    fontSize: 30
   },
   gameLayout: {
     backgroundColor: '#30D1D5',
