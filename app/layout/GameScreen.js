@@ -38,17 +38,17 @@ export default class GameScreen extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.showAlert);
     const _this = this;
-    let progress = 0;
+    let duration = _this.state.time, progress = 0, limit  = duration/10, counter = 0;
     var interval = setInterval(function() {
+      counter += 1;
+      if(counter%limit == 0) {
+      	progress = parseFloat((progress + 0.1).toFixed(2));
+      }
       let t1 = _this.state.time - 1;
       if( t1 == 0 ) {
         _this.checkHighScore();
         clearInterval( interval );
       }
-      progress += Math.random() / 5;
-        if (progress > 1) {
-          progress = 1;
-        }
       _this.setState({ time: t1, interval: interval, progress: progress});
     }, 1000);
   }

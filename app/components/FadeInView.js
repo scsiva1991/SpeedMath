@@ -18,18 +18,23 @@ export default class FadeInView extends Component {
     Animated.timing(
       this.state.fadeAnim,
       {
-        toValue: 1 
+        toValue: 1 ,
+        duration: 200
       }
     ).start()
   }
 
   render() {
+    let containerPosition = {
+        transform: [
+            {scale: this.state.bounceValue},
+        ],
+    }
     return(
       <Animated.View
       style={{
-        ...this.props.style,
-        opacity: this.state.fadeAnim
-      }}>
+        ...this.props.style
+      },   [containerPosition]}>
         {this.props.children}
       </Animated.View>
     )
