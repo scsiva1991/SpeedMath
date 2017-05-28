@@ -27,7 +27,7 @@ export default class FadeInView extends Component {
   render() {
     let containerPosition = {
         transform: [
-            {scale: this.state.bounceValue},
+            {scale: this.state.fadeAnim},
         ],
     }
     return(

@@ -22,8 +22,8 @@ export default class GameScreen extends Component {
   constructor(props) {
     super();
     this.showAlert = this.showAlert.bind(this);
-    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 10,
-    scored: 'true', newQuestion : 'true', progress: 0};
+    this.state = { n1: 0, n2:0, answer: 0, userAnswer: '', expr: '', score: 0, time : 30,
+    scored: 'true', newQuestion : 'true', progress: 0, indeterminate: true, progressColor: '#30D1D5'};
   }
 
   componentWillMount() {
@@ -37,19 +37,28 @@ export default class GameScreen extends Component {
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.showAlert);
+    console.log('$$', this.state.progressColor);
     const _this = this;
-    let duration = _this.state.time, progress = 0, limit  = duration/10, counter = 0;
+    let duration = _this.state.time, progress = 0, limit  = duration/10,
+        counter = 0, progressColor = _this.state.progressColor;
     var interval = setInterval(function() {
       counter += 1;
       if(counter%limit == 0) {
+        if( _this.state.indeterminate ) {
+          _this.setState({ indeterminate: false });
+        }
       	progress = parseFloat((progress + 0.1).toFixed(2));
+      }
+      if( progress == 0.8 ) {
+        progressColor = '#FF0000';
       }
       let t1 = _this.state.time - 1;
       if( t1 == 0 ) {
         _this.checkHighScore();
         clearInterval( interval );
       }
-      _this.setState({ time: t1, interval: interval, progress: progress});
+
+      _this.setState({ time: t1, interval: interval, progress: progress, progressColor: progressColor});
     }, 1000);
   }
 
@@ -153,7 +162,10 @@ export default class GameScreen extends Component {
       <View style={[styles.container]}>
         <View style={[styles.gameTopLayout]}>
           <View style={[styles.progressBar]}>
-            <Progress.Pie color={'#30D1D5'} progress={this.state.progress} size={50} />
+            <Progress.Pie color={this.state.progressColor}
+             indeterminate={this.state.indeterminate}
+             progress={this.state.progress}
+             size={50} />
           </View>
           { this.state.scored == 'true' &&
             <FadeInView style={{marginRight: 5}}>

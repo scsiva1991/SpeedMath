@@ -1,6 +1,6 @@
 module.exports = {
   EXPRESSIONS : [ '+', '-', '*', '/' ],
-  RANGES : [ 50, 50, 10, 10 ],
-  DURATION : 60,
+  RANGES : [ 5000, 3000, 100, 100 ],
+  DURATION : 10,
   KEY_SPEED_MATH : 'KEY_SPEED_MATH'
 }
